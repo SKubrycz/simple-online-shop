@@ -4,9 +4,11 @@ import "./App.css";
 function App() {
   return (
     <>
-      <h1>Online shop</h1>
-      <h2>Find out what you can order here:</h2>
-      <Link to="/product-list">Browse product list</Link>
+      <h1>Sklep internetowy</h1>
+      <h2>Dowiedz się co możesz zamówić:</h2>
+      <Link reloadDocument to="/product-list">
+        Przeglądaj listę produktów
+      </Link>
     </>
   );
 }

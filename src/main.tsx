@@ -9,27 +9,22 @@ import OrderSummary from "./pages/OrderSummary.tsx";
 import OrderConfirmation from "./pages/OrderConfirmation.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}></Route>
-        <Route
-          path="/product-list"
-          element={<ProductList></ProductList>}
-        ></Route>
-        <Route
-          path="/shopping-cart"
-          element={<ShoppingCart></ShoppingCart>}
-        ></Route>
-        <Route
-          path="/order-summary"
-          element={<OrderSummary></OrderSummary>}
-        ></Route>
-        <Route
-          path="/order-confirmation"
-          element={<OrderConfirmation></OrderConfirmation>}
-        ></Route>
-      </Routes>
-    </BrowserRouter>
-  </StrictMode>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />}></Route>
+      <Route path="/product-list" element={<ProductList></ProductList>}></Route>
+      <Route
+        path="/shopping-cart"
+        element={<ShoppingCart></ShoppingCart>}
+      ></Route>
+      <Route
+        path="/order-summary"
+        element={<OrderSummary></OrderSummary>}
+      ></Route>
+      <Route
+        path="/order-confirmation"
+        element={<OrderConfirmation></OrderConfirmation>}
+      ></Route>
+    </Routes>
+  </BrowserRouter>
 );

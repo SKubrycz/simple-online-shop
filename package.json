@@ -2,7 +2,7 @@
   "name": "simple-online-shop",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://SKubrycz.github.io/simple-online-shop",
+  "homepage": "https://SKubrycz.github.io/simple-online-shop/#",
   "type": "module",
   "scripts": {
     "dev": "vite",

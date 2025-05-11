@@ -6,14 +6,15 @@ import { Link } from "react-router";
 import { getPartialSum } from "../utils/getPartialSum";
 
 export default function ShoppingCart() {
-  const [value, setValue] = useLocalStorage("cart");
+  const [cart, setCart] = useLocalStorage("cart");
   const [sum, setSum] = useState(0);
 
   function handleAdjustAmount(sign: Sign, id: number) {
     let updatedValue = null;
 
-    if (Array.isArray(value)) {
-      const newValueArray = value.map((el: CartProduct, i) => {
+    if (Array.isArray(cart)) {
+      // If there is an id found, remap its 'amount' property
+      const newValueArray = cart.map((el: CartProduct, i) => {
         if (el.id === id) {
           let updatedItem;
           if (sign === "-") {
@@ -28,52 +29,55 @@ export default function ShoppingCart() {
             };
           }
 
-          updatedValue = [...value];
+          updatedValue = [...cart];
           updatedValue[i] = updatedItem;
           return updatedItem;
         }
         return el;
       });
 
+      // Update with the new amount
       if (updatedValue) {
-        setValue(newValueArray);
+        setCart(newValueArray);
       }
     }
   }
 
   function handleDeleteCartItem(id: number) {
-    if (Array.isArray(value)) {
-      const found = value.find((el: CartProduct) => el.id == id);
-      const newValueArray = [...value];
+    if (Array.isArray(cart)) {
+      const found = cart.find((el: CartProduct) => el.id == id);
+      const newValueArray = [...cart];
       const index = newValueArray.indexOf(found);
-      newValueArray.splice(index, 1);
-      setValue(newValueArray);
+      newValueArray.splice(index, 1); // Remove and element at given index...
+      setCart(newValueArray); // ...and replace the array
     }
   }
 
   function handleCartSum() {
-    if (Array.isArray(value)) {
-      value.forEach((el) => {
+    if (Array.isArray(cart)) {
+      let sum = 0;
+      cart.forEach((el) => {
         const productSum = getPartialSum(
           el.price.main,
           el.price.fractional,
           el.amount
         );
-        setSum((previous) => previous + productSum);
+        sum += productSum;
       });
+      setSum(sum);
     }
   }
 
   useEffect(() => {
-    handleCartSum();
-  }, []);
+    handleCartSum(); // Recalculate each time the cart array changes
+  }, [cart]);
 
   return (
     <>
       <Link to="/product-list">{"<"}Powrót do listy produktów</Link>
-      <h1>Koszyk</h1>
-      {Array.isArray(value) ? (
-        value.map((el, i) => {
+      <h1>Koszyk zakupów</h1>
+      {Array.isArray(cart) &&
+        cart.map((el, i) => {
           return (
             <CartItem
               key={i}
@@ -82,14 +86,15 @@ export default function ShoppingCart() {
               deleteCartItem={handleDeleteCartItem}
             ></CartItem>
           );
-        })
+        })}
+      <h2 className="sum">Razem: {sum.toFixed(2)}</h2>
+      {Array.isArray(cart) && cart.length > 0 ? (
+        <Link to="/order-summary">
+          <button>Przejdź do podsumowania</button>
+        </Link>
       ) : (
-        <></>
+        <button disabled={true}>Przejdź do podsumowania</button>
       )}
-      <h2 className="sum">Razem: {sum}</h2>
-      <Link to="/order-summary">
-        <button>Przejdź do podsumowania</button>
-      </Link>
     </>
   );
 }

@@ -15,33 +15,35 @@ export default function CartItem({
 }: CartItemProps) {
   const [partialSum, setPartialSum] = useState(0);
 
-  function handlePartialSum() {
-    let sum = getPartialSum(
-      cartItemInfo.price.main,
-      cartItemInfo.price.fractional,
-      cartItemInfo.amount
-    );
+  const { id, name, price, amount } = cartItemInfo;
 
+  function handlePartialSum() {
+    let sum = getPartialSum(price.main, price.fractional, amount);
     setPartialSum(sum);
   }
 
   useEffect(() => {
     handlePartialSum();
-  }, [cartItemInfo.amount]);
+  }, [amount]);
 
   return (
-    <div className="flex">
-      <h3>{cartItemInfo.name}</h3>
-      <div className="flex">
-        <button onClick={() => adjustAmount("-", cartItemInfo.id)}>-</button>
-        <h4>x{cartItemInfo.amount}</h4>
-        <button onClick={() => adjustAmount("+", cartItemInfo.id)}>+</button>
+    <div className="grid">
+      <h3>{name}</h3>
+      <div className="flex-center">
+        <button disabled={amount < 2} onClick={() => adjustAmount("-", id)}>
+          -
+        </button>
+        <h4>x{amount}</h4>
+        <button disabled={amount >= 99} onClick={() => adjustAmount("+", id)}>
+          +
+        </button>
       </div>
       <h4>
-        {cartItemInfo.price.main}.{cartItemInfo.price.fractional} | Suma:{" "}
-        {partialSum}
+        {price.main}.{price.fractional} | Suma: {partialSum.toFixed(2)}
       </h4>
-      <button onClick={() => deleteCartItem(cartItemInfo.id)}>Usuń</button>
+      <button onClick={() => deleteCartItem(id)} className="btn-red">
+        Usuń
+      </button>
     </div>
   );
 }

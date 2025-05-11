@@ -45,20 +45,51 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 1em;
 }
-
 .flex-col {
   display: flex;
   flex-direction: column;
 }
-
-.flex > * {
+.flex-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.flex > *,
+.flex-center > * {
   margin: 0 0.5em 0 0.5em;
+}
+
+.grid {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+}
+.grid > *:first-child {
+  text-align: left;
+  margin-right: 1em;
+}
+.grid > *:last-child {
+  text-align: right;
+  margin-left: 1em;
 }
 
 .sum {
   width: 100%;
   text-align: right;
   border-top: 1px solid gray;
+}
+
+.success {
+  color: green;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.btn-red:hover {
+  border-color: lightgray;
+  background-color: rgb(202, 0, 0);
 }

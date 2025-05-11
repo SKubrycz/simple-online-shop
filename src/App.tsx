@@ -7,7 +7,7 @@ function App() {
       <h1>Sklep internetowy</h1>
       <h2>Dowiedz się co możesz zamówić:</h2>
       <Link reloadDocument to="/product-list">
-        Przeglądaj listę produktów
+        <h3>Przeglądaj listę produktów</h3>
       </Link>
     </>
   );

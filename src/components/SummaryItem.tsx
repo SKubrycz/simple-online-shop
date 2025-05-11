@@ -13,7 +13,6 @@ export default function SummaryItem({ cartItemInfo }: SummaryItemProps) {
 
   function handlePartialSum() {
     const sum = getPartialSum(price.main, price.fractional, amount);
-
     setPartialSum(sum);
   }
 
@@ -22,11 +21,11 @@ export default function SummaryItem({ cartItemInfo }: SummaryItemProps) {
   }, []);
 
   return (
-    <div className="flex">
+    <div className="grid">
       <h4>{name}</h4>
-      <h5>{amount}</h5>
+      <h5>x{amount}</h5>
       <h5>
-        {price.main}.{price.fractional} | {partialSum}
+        {price.main}.{price.fractional} | {partialSum.toFixed(2)}
       </h5>
     </div>
   );

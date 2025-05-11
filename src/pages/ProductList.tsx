@@ -14,6 +14,7 @@ export default function ProductList() {
 
     if (Array.isArray(value)) {
       const newValueArray = value.map((el: CartProduct, i: number) => {
+        // If the cart already contains an item with specified 'id', add 1 to the 'amount' property
         if (el.id === id) {
           const updatedItem = {
             ...el,
@@ -32,8 +33,11 @@ export default function ProductList() {
     }
 
     if (!updatedValue && Array.isArray(productList)) {
+      // Search for an item with a specified 'id' from JSON file
       const found = productList.find((el: Product) => el.id === id);
       if (found) {
+        // If the item with such 'id' exists, add an 'amount' property with initial value of 1
+        // and adjust the localStorage accordingly
         const withAmount = {
           ...found,
           amount: 1,
@@ -50,15 +54,16 @@ export default function ProductList() {
         <Link to="/shopping-cart">Przeglądaj koszyk</Link>
       </h4>
       <div className="flex-col">
-        {productList.map((el, i) => {
-          return (
-            <ProductItem
-              key={i}
-              productInfo={el}
-              addToCart={() => handleAddCart(el.id)}
-            ></ProductItem>
-          );
-        })}
+        {Array.isArray(productList) &&
+          productList.map((el, i) => {
+            return (
+              <ProductItem
+                key={i}
+                productInfo={el}
+                addToCart={() => handleAddCart(el.id)}
+              ></ProductItem>
+            );
+          })}
       </div>
     </>
   );

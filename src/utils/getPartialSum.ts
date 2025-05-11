@@ -4,7 +4,6 @@ export function getPartialSum(
   amount: number
 ) {
   const fractionalDivided = fractional / 100;
-  let sum = main * amount + fractionalDivided * fractional;
-
+  let sum = main * amount + fractionalDivided * amount;
   return sum;
 }

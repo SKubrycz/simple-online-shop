@@ -5,12 +5,12 @@ import { getPartialSum } from "../utils/getPartialSum";
 import { Link } from "react-router";
 
 export default function OrderSummary() {
-  const [value] = useLocalStorage("cart");
+  const [cart] = useLocalStorage("cart");
   const [sum, setSum] = useState(0);
 
   function handleSum() {
-    if (Array.isArray(value)) {
-      value.forEach((el) => {
+    if (Array.isArray(cart)) {
+      cart.forEach((el) => {
         const partialSum = getPartialSum(
           el.price.main,
           el.price.fractional,
@@ -28,18 +28,20 @@ export default function OrderSummary() {
   return (
     <>
       <Link to="/shopping-cart">{"<"} Powrót do koszyka</Link>
-      <h1>Order Summary</h1>
-      {Array.isArray(value) ? (
-        value.map((el, i) => {
+      <h1>Podsumowanie zamówienia</h1>
+      {Array.isArray(cart) &&
+        cart.map((el, i) => {
           return <SummaryItem key={i} cartItemInfo={el}></SummaryItem>;
-        })
+        })}
+      <h2 className="sum">Razem: {sum.toFixed(2)}</h2>
+      {/* Disable the button if there are no items in the shopping cart */}
+      {Array.isArray(cart) && cart.length > 0 ? (
+        <Link reloadDocument to="/order-confirmation">
+          <button>Złóż zamówienie</button>
+        </Link>
       ) : (
-        <></>
+        <button disabled={true}>Złóż zamówienie</button>
       )}
-      <h2 className="sum">Razem: {sum}</h2>
-      <Link reloadDocument to="/order-confirmation">
-        <button>Złóż zamówienie</button>
-      </Link>
     </>
   );
 }

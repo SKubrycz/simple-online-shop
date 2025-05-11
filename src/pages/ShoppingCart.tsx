@@ -3,6 +3,7 @@ import CartItem from "../components/CartItem";
 import useLocalStorage from "../hooks/useLocalStorage";
 import type { CartProduct, Sign } from "../types/products";
 import { Link } from "react-router";
+import { getPartialSum } from "../utils/getPartialSum";
 
 export default function ShoppingCart() {
   const [value, setValue] = useLocalStorage("cart");
@@ -53,10 +54,11 @@ export default function ShoppingCart() {
   function handleCartSum() {
     if (Array.isArray(value)) {
       value.forEach((el) => {
-        const main = el.price.main;
-        const fractional = el.price.fractional / 100;
-        let productSum = main * el.amount + fractional * el.price.fractional;
-
+        const productSum = getPartialSum(
+          el.price.main,
+          el.price.fractional,
+          el.amount
+        );
         setSum((previous) => previous + productSum);
       });
     }
@@ -85,9 +87,9 @@ export default function ShoppingCart() {
         <></>
       )}
       <h2 className="sum">Razem: {sum}</h2>
-      <button>
-        <Link to="/order-summary">Przejdź do podsumowania</Link>
-      </button>
+      <Link to="/order-summary">
+        <button>Przejdź do podsumowania</button>
+      </Link>
     </>
   );
 }

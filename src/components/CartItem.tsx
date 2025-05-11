@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { CartProduct, Sign } from "../types/products";
+import { getPartialSum } from "../utils/getPartialSum";
 
 interface CartItemProps {
   cartItemInfo: CartProduct;
@@ -15,10 +16,11 @@ export default function CartItem({
   const [partialSum, setPartialSum] = useState(0);
 
   function handlePartialSum() {
-    const main = cartItemInfo.price.main;
-    const fractional = cartItemInfo.price.fractional / 100;
-    let sum =
-      main * cartItemInfo.amount + fractional * cartItemInfo.price.fractional;
+    let sum = getPartialSum(
+      cartItemInfo.price.main,
+      cartItemInfo.price.fractional,
+      cartItemInfo.amount
+    );
 
     setPartialSum(sum);
   }

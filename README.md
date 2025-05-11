@@ -12,6 +12,7 @@ The whole process of identifying products for modification was based on products
 ### Here are the steps which have to be taken in order to run the application:
 
 > *After cloning the repository, inside /simple-online-shop directory*
+
 NPM packages installation:
 ```console
 npm install

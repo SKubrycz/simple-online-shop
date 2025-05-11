@@ -18,9 +18,17 @@ NPM packages installation:
 npm install
 ```
 
-Once all dependencies are installed, the app can be started:
+Once all dependencies are installed, the app can be started in development mode, served at `http://localhost:5173/simple-online-shop`:
 ```console
 npm run dev
 ```
 
-The app is served at: `http://localhost:5173/`
+To run preview, the app has to be built:
+```console
+npm run build
+``` 
+After that:
+```console
+npm run preview
+```
+In the preview mode the app is served at: `http://localhost:4173/simple-online-shop`
